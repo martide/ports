@@ -14,7 +14,11 @@ defmodule Ports.MixProject do
       deps: deps(),
       description: description(),
       package: package(),
-      source_url: @source_url
+      source_url: @source_url,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test
+      ]
     ]
   end
 
