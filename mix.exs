@@ -1,0 +1,48 @@
+defmodule Ports.MixProject do
+  use Mix.Project
+
+  @source_url "https://github.com/martide/ports"
+  @version "0.1.0"
+
+  def project do
+    [
+      app: :ports,
+      version: @version,
+      elixir: "~> 1.13",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      description: description(),
+      package: package(),
+      source_url: @source_url
+    ]
+  end
+
+  def application do
+    [extra_applications: [:logger]]
+  end
+
+  defp deps do
+    [
+      {:csv, "~> 2.4"},
+      {:dialyxir, "~> 1.1", only: ~w(dev test)a, runtime: false},
+      {:ex_doc, "~> 0.26.0", only: :dev},
+      {:excoveralls, "~> 0.14.4", only: :test}
+    ]
+  end
+
+  defp description do
+    """
+      Ports is a collection of United Nations Code for Trade and Transport Locations or known as "UN/LOCODE".
+    """
+  end
+
+  defp package do
+    [
+      files: ~w(mix.exs README.md lib),
+      maintainers: ["Martide"],
+      licenses: ["Apache-2.0"],
+      links: %{"Github" => @source_url}
+    ]
+  end
+end
