@@ -30,8 +30,8 @@ defmodule Ports.MixProject do
     [
       {:csv, "~> 2.4"},
       {:dialyxir, "~> 1.1", only: ~w(dev test)a, runtime: false},
-      {:ex_doc, "~> 0.26.0", only: :dev},
-      {:excoveralls, "~> 0.14.4", only: :test}
+      {:ex_doc, "~> 0.27", only: :dev},
+      {:excoveralls, "~> 0.14", only: :test}
     ]
   end
 
