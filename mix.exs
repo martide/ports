@@ -28,7 +28,7 @@ defmodule Ports.MixProject do
 
   defp deps do
     [
-      {:csv, "~> 2.4"},
+      {:nimble_csv, "~> 1.1"},
       {:dialyxir, "~> 1.1", only: ~w(dev test)a, runtime: false},
       {:ex_doc, "~> 0.27", only: :dev},
       {:excoveralls, "~> 0.14", only: :test}
@@ -43,7 +43,17 @@ defmodule Ports.MixProject do
 
   defp package do
     [
-      files: ~w(mix.exs README.md lib),
+      files: [
+        "mix.exs",
+        "README*",
+        "CHANGELOG*",
+        "LICENSE*",
+        "priv/data/code-list.csv",
+        "priv/data/country-codes.csv",
+        "priv/data/function-classifiers.csv",
+        "priv/data/status-indicators.csv",
+        "priv/data/subdivision-codes.csv"
+      ],
       maintainers: ["Martide"],
       licenses: ["Apache-2.0"],
       links: %{"Github" => @source_url}
