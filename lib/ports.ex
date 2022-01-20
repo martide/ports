@@ -5,19 +5,22 @@ defmodule Ports do
 
   alias Ports.Loader
 
+  # Load during compilation
+  @ports Loader.load_code_list()
+  @countries Loader.load_countries()
+  @function_classifiers Loader.load_functions()
+  @statuses Loader.load_statuses()
+  @subdivisions Loader.load_subdivisions()
+
   @doc """
   Returns all ports.
   """
-  def all do
-    Loader.load_code_list()
-  end
+  def all, do: @ports
 
   @doc """
   Returns all countries.
   """
-  def countries do
-    Loader.load_countries()
-  end
+  def countries, do: @countries
 
   @doc """
   Returns one country given is alpha2 country code.
@@ -30,16 +33,14 @@ defmodule Ports do
 
   """
   def get_country(country_code) do
-    Loader.load_countries()
+    countries()
     |> Enum.find(&(&1.code == country_code))
   end
 
   @doc """
   Returns all functions.
   """
-  def functions do
-    Loader.load_functions()
-  end
+  def functions, do: @function_classifiers
 
   @doc """
   Returns one function given is function code.
@@ -52,16 +53,14 @@ defmodule Ports do
 
   """
   def get_function(function_code) do
-    Loader.load_functions()
+    functions()
     |> Enum.find(&(String.to_integer(&1.code) == function_code))
   end
 
   @doc """
   Returns all statuses.
   """
-  def statuses do
-    Loader.load_statuses()
-  end
+  def statuses, do: @statuses
 
   @doc """
   Returns one status given is status code.
@@ -74,16 +73,14 @@ defmodule Ports do
 
   """
   def get_status(status_code) do
-    Loader.load_statuses()
+    statuses()
     |> Enum.find(&(&1.code == status_code))
   end
 
   @doc """
   Returns all subdivisions.
   """
-  def subdivisions do
-    Loader.load_subdivisions()
-  end
+  def subdivisions, do: @subdivisions
 
   @doc """
   Returns one subdivision given is subdivision country and code.
@@ -96,7 +93,7 @@ defmodule Ports do
 
   """
   def get_subdivision(country_code, subdivision_code) do
-    Loader.load_subdivisions()
+    subdivisions()
     |> Enum.find(&(&1.country == country_code and &1.code == subdivision_code))
   end
 end
