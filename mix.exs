@@ -44,6 +44,7 @@ defmodule Ports.MixProject do
   defp package do
     [
       files: [
+        "lib",
         "mix.exs",
         "README*",
         "CHANGELOG*",
