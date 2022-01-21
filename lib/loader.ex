@@ -9,25 +9,25 @@ defmodule Ports.Loader do
     Subdivision
   }
 
+  NimbleCSV.define(CSVParser, separator: ",", escape: "\"")
+
   def load_code_list do
     "code-list.csv"
     |> csv_decode()
-    |> Stream.map(fn {:ok, line} ->
-      [
-        _change,
-        country,
-        location,
-        name,
-        _name_wo_diacritics,
-        subdivision,
-        status,
-        function,
-        date,
-        iata,
-        coordinates,
-        _remarks
-      ] = line
-
+    |> Stream.map(fn [
+                       _change,
+                       country,
+                       location,
+                       name,
+                       _name_wo_diacritics,
+                       subdivision,
+                       status,
+                       function,
+                       date,
+                       iata,
+                       coordinates,
+                       _remarks
+                     ] ->
       %Port{
         country: country,
         location: location,
@@ -46,12 +46,10 @@ defmodule Ports.Loader do
   def load_countries do
     "country-codes.csv"
     |> csv_decode()
-    |> Stream.map(fn {:ok, line} ->
-      [
-        country_code,
-        country_name
-      ] = line
-
+    |> Stream.map(fn [
+                       country_code,
+                       country_name
+                     ] ->
       %Country{
         code: country_code,
         name: country_name
@@ -63,12 +61,10 @@ defmodule Ports.Loader do
   def load_functions do
     "function-classifiers.csv"
     |> csv_decode()
-    |> Stream.map(fn {:ok, line} ->
-      [
-        function_code,
-        function_description
-      ] = line
-
+    |> Stream.map(fn [
+                       function_code,
+                       function_description
+                     ] ->
       %Function{
         code: function_code,
         description: function_description
@@ -80,12 +76,10 @@ defmodule Ports.Loader do
   def load_statuses do
     "status-indicators.csv"
     |> csv_decode()
-    |> Stream.map(fn {:ok, line} ->
-      [
-        status_code,
-        status_description
-      ] = line
-
+    |> Stream.map(fn [
+                       status_code,
+                       status_description
+                     ] ->
       %Status{
         code: status_code,
         description: status_description
@@ -97,13 +91,11 @@ defmodule Ports.Loader do
   def load_subdivisions do
     "subdivision-codes.csv"
     |> csv_decode()
-    |> Stream.map(fn {:ok, line} ->
-      [
-        status_country,
-        status_code,
-        status_name
-      ] = line
-
+    |> Stream.map(fn [
+                       status_country,
+                       status_code,
+                       status_name
+                     ] ->
       %Subdivision{
         country: status_country,
         code: status_code,
@@ -117,6 +109,6 @@ defmodule Ports.Loader do
     [:code.priv_dir(:ports), "data", file_name]
     |> Path.join()
     |> File.stream!([], :line)
-    |> CSV.decode()
+    |> CSVParser.parse_stream(skip_headers: false)
   end
 end
