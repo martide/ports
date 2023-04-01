@@ -17,7 +17,11 @@ defmodule Ports.MixProject do
       source_url: @source_url,
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        coveralls: :test
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+        "coveralls.post": :test
       ]
     ]
   end
@@ -29,7 +33,7 @@ defmodule Ports.MixProject do
   defp deps do
     [
       {:nimble_csv, "~> 1.1"},
-      {:dialyxir, "~> 1.1", only: ~w(dev test)a, runtime: false},
+      {:dialyxir, "~> 1.2", only: [:test, :dev], runtime: false},
       {:ex_doc, "~> 0.27", only: :dev},
       {:excoveralls, "~> 0.14", only: :test}
     ]
