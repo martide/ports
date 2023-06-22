@@ -33,9 +33,11 @@ defmodule Ports.MixProject do
   defp deps do
     [
       {:nimble_csv, "~> 1.1"},
-      {:dialyxir, "~> 1.2", only: [:test, :dev], runtime: false},
       {:ex_doc, "~> 0.27", only: :dev},
-      {:excoveralls, "~> 0.14", only: :test}
+      {:excoveralls, "~> 0.14", only: :test},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.11", only: [:dev, :test], runtime: false}
     ]
   end
 
