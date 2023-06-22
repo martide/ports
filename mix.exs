@@ -35,7 +35,8 @@ defmodule Ports.MixProject do
       {:nimble_csv, "~> 1.1"},
       {:dialyxir, "~> 1.2", only: [:test, :dev], runtime: false},
       {:ex_doc, "~> 0.27", only: :dev},
-      {:excoveralls, "~> 0.14", only: :test}
+      {:excoveralls, "~> 0.14", only: :test},
+      {:sobelow, "~> 0.11", only: [:test, :dev], runtime: false}
     ]
   end
 
