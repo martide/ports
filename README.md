@@ -14,3 +14,8 @@ def deps do
   ]
 end
 ```
+
+## Updating
+
+1. Download the UNLOCODE csv from [UNECE](https://unece.org/trade/cefact/UNLOCODE-Download)
+2. If there are multiple csv files, compile them into one and save it to `priv/data/code-list.csv`
