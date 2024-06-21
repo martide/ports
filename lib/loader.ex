@@ -108,7 +108,7 @@ defmodule Ports.Loader do
   defp csv_decode(file_name) do
     [:code.priv_dir(:ports), "data", file_name]
     |> Path.join()
-    |> File.stream!([], :line)
+    |> File.stream!()
     |> CSVParser.parse_stream(skip_headers: false)
   end
 end
