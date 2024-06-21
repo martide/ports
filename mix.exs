@@ -2,7 +2,7 @@ defmodule Ports.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/martide/ports"
-  @version "0.1.1"
+  @version "0.1.2"
 
   def project do
     [
