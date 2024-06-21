@@ -5,7 +5,7 @@ defmodule PortsTest do
   describe "ports" do
     test "all/0 get all ports" do
       ports = Ports.all()
-      assert Enum.count(ports) == 112_052
+      assert Enum.count(ports) == 116_415
     end
   end
 
