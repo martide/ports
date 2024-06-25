@@ -9,10 +9,22 @@ defmodule Ports.Loader do
     Subdivision
   }
 
-  NimbleCSV.define(CSVParser, separator: ",", escape: "\"")
+  NimbleCSV.define(CSVParser, separator: ",", escape: "\"", trim_bom: true, dump_bom: true)
+
+  for path <- Path.wildcard("priv/data/*.csv") do
+    @external_resource path
+  end
+
+  defguard is_empty(data) when data in [nil, ""]
+
+  @code_list_sources [
+    "2023-2 UNLOCODE CodeListPart1.csv",
+    "2023-2 UNLOCODE CodeListPart2.csv",
+    "2023-2 UNLOCODE CodeListPart3.csv"
+  ]
 
   def load_code_list do
-    "code-list.csv"
+    @code_list_sources
     |> csv_decode()
     |> Stream.map(fn [
                        _change,
@@ -40,7 +52,16 @@ defmodule Ports.Loader do
         coordinates: coordinates
       }
     end)
+    |> Stream.reject(fn
+      %{country: country, location: location} when is_empty(country) or is_empty(location) -> true
+      _ -> false
+    end)
+    |> Stream.map(fn port -> Map.update!(port, :name, &to_valid_string/1) end)
     |> Enum.to_list()
+  end
+
+  defp to_valid_string(string) do
+    string |> :binary.bin_to_list() |> :unicode.characters_to_binary()
   end
 
   def load_countries do
@@ -105,10 +126,18 @@ defmodule Ports.Loader do
     |> Enum.to_list()
   end
 
-  defp csv_decode(file_name) do
-    [:code.priv_dir(:ports), "data", file_name]
-    |> Path.join()
-    |> File.stream!()
+  defp csv_decode(file_names) do
+    file_names = List.wrap(file_names)
+
+    streams =
+      Enum.map(file_names, fn file_name ->
+        [:code.priv_dir(:ports), "data", file_name]
+        |> Path.join()
+        |> File.stream!()
+      end)
+
+    streams
+    |> Stream.concat()
     |> CSVParser.parse_stream(skip_headers: false)
   end
 end

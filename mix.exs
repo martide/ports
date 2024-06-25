@@ -55,11 +55,7 @@ defmodule Ports.MixProject do
         "README*",
         "CHANGELOG*",
         "LICENSE*",
-        "priv/data/code-list.csv",
-        "priv/data/country-codes.csv",
-        "priv/data/function-classifiers.csv",
-        "priv/data/status-indicators.csv",
-        "priv/data/subdivision-codes.csv"
+        "priv/data/*.csv"
       ],
       maintainers: ["Martide"],
       licenses: ["Apache-2.0"],
