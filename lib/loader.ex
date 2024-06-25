@@ -9,7 +9,7 @@ defmodule Ports.Loader do
     Subdivision
   }
 
-  NimbleCSV.define(CSVParser, separator: ",", escape: "\"", trim_bom: true, dump_bom: true)
+  NimbleCSV.define(CSVParser, separator: ",", escape: "\"")
 
   for path <- Path.wildcard("priv/data/*.csv") do
     @external_resource path
