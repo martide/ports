@@ -5,7 +5,25 @@ defmodule PortsTest do
   describe "ports" do
     test "all/0 get all ports" do
       ports = Ports.all()
-      assert Enum.count(ports) == 116_415
+      assert Enum.count(ports) == 116_074
+    end
+
+    test "all/0 returns ports with country and location" do
+      assert Enum.all?(Ports.all(), fn port ->
+               port.country not in ["", nil] and port.location not in ["", nil]
+             end)
+    end
+
+    test "all/0 returns ports having name with proper characters" do
+      assert Enum.all?(Ports.all(), fn port ->
+               !String.contains?(port.name, "�")
+             end)
+    end
+
+    test "all/0 returns ports having name with valid string" do
+      assert Enum.all?(Ports.all(), fn port ->
+               String.valid?(port.name)
+             end)
     end
   end
 

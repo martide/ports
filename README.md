@@ -18,4 +18,5 @@ end
 ## Updating
 
 1. Download the UNLOCODE csv from [UNECE](https://unece.org/trade/cefact/UNLOCODE-Download)
-2. If there are multiple csv files, compile them into one and save it to `priv/data/code-list.csv`
+2. Save the downloaded files to folder `priv/data`
+3. Update module attribute `@code_list_sources` in `Ports.Loader` with the downloaded file names
