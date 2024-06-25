@@ -49,14 +49,6 @@ defmodule Ports.MixProject do
 
   defp package do
     [
-      files: [
-        "lib",
-        "mix.exs",
-        "README*",
-        "CHANGELOG*",
-        "LICENSE*",
-        "priv/data/*.csv"
-      ],
       maintainers: ["Martide"],
       licenses: ["Apache-2.0"],
       links: %{"Github" => @source_url}
