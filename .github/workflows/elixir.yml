@@ -99,19 +99,3 @@ jobs:
           elixir-version: ${{matrix.elixir}}
       - run: mix do deps.get, compile --all-warnings --warnings-as-errors
       - run: mix test
-
-  elixir_1_14:
-    runs-on: ubuntu-latest
-    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-    strategy:
-      matrix:
-        otp: [24.x, 25.x]
-        elixir: [1.14.x]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: erlef/setup-beam@v1
-        with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
-      - run: mix do deps.get, compile --all-warnings --warnings-as-errors
-      - run: mix test
