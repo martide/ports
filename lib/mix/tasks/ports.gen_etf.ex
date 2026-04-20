@@ -42,10 +42,11 @@ defmodule Mix.Tasks.Ports.GenEtf do
   end
 
   defp check(ports) do
+    # Safer than :erlang.binary_to_term — rejects function/reference terms on top of :safe.
     existing =
       @output_path
       |> File.read!()
-      |> :erlang.binary_to_term()
+      |> Plug.Crypto.non_executable_binary_to_term([:safe])
 
     if existing == ports do
       Mix.shell().info("#{@output_path} is up to date (#{length(ports)} ports)")

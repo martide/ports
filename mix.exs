@@ -36,6 +36,7 @@ defmodule Ports.MixProject do
   defp deps do
     [
       {:nimble_csv, "~> 1.1"},
+      {:plug_crypto, "~> 2.0"},
       {:ex_doc, "~> 0.27", only: :dev},
       {:excoveralls, "~> 0.14", only: :test},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},

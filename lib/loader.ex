@@ -24,10 +24,11 @@ defmodule Ports.Loader do
   ]
 
   def load_ports do
+    # Safer than :erlang.binary_to_term — rejects function/reference terms on top of :safe.
     [:code.priv_dir(:ports), "data", "ports.etf"]
     |> Path.join()
     |> File.read!()
-    |> :erlang.binary_to_term()
+    |> Plug.Crypto.non_executable_binary_to_term([:safe])
   end
 
   def load_code_list do
