@@ -42,19 +42,21 @@ defmodule Mix.Tasks.Ports.GenEtf do
   end
 
   defp check(ports) do
-    # Safer than :erlang.binary_to_term — rejects function/reference terms on top of :safe.
-    existing =
-      @output_path
-      |> File.read!()
-      |> Plug.Crypto.non_executable_binary_to_term([:safe])
-
-    if existing == ports do
+    if up_to_date?(ports) do
       Mix.shell().info("#{@output_path} is up to date (#{length(ports)} ports)")
     else
       Mix.raise("""
-      #{@output_path} is out of date with the source CSVs.
+      #{@output_path} is missing or out of date with the source CSVs.
       Run `mix ports.gen_etf` and commit the result.
       """)
+    end
+  end
+
+  defp up_to_date?(ports) do
+    case File.read(@output_path) do
+      # Safer than :erlang.binary_to_term — rejects function/reference terms on top of :safe.
+      {:ok, binary} -> Plug.Crypto.non_executable_binary_to_term(binary, [:safe]) == ports
+      {:error, _reason} -> false
     end
   end
 end

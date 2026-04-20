@@ -13,7 +13,12 @@ defmodule Ports do
   @doc """
   Returns all ports.
   """
-  def all, do: :persistent_term.get({Ports, :all})
+  def all do
+    case :persistent_term.get({Ports, :all}, :not_loaded) do
+      :not_loaded -> raise "Ports data not loaded. Ensure the :ports application is started."
+      ports -> ports
+    end
+  end
 
   @doc """
   Returns all countries.
