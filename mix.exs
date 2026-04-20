@@ -22,7 +22,8 @@ defmodule Ports.MixProject do
         "coveralls.html": :test,
         "coveralls.json": :test,
         "coveralls.post": :test
-      ]
+      ],
+      dialyzer: [plt_add_apps: [:mix]]
     ]
   end
 
