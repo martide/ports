@@ -23,6 +23,13 @@ defmodule Ports.Loader do
     "2023-2 UNLOCODE CodeListPart3.csv"
   ]
 
+  def load_ports do
+    [:code.priv_dir(:ports), "data", "ports.etf"]
+    |> Path.join()
+    |> File.read!()
+    |> :erlang.binary_to_term()
+  end
+
   def load_code_list do
     @code_list_sources
     |> csv_decode()

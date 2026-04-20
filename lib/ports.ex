@@ -5,8 +5,6 @@ defmodule Ports do
 
   alias Ports.Loader
 
-  # Load during compilation
-  @ports Loader.load_code_list()
   @countries Loader.load_countries()
   @function_classifiers Loader.load_functions()
   @statuses Loader.load_statuses()
@@ -15,7 +13,7 @@ defmodule Ports do
   @doc """
   Returns all ports.
   """
-  def all, do: @ports
+  def all, do: :persistent_term.get({Ports, :all})
 
   @doc """
   Returns all countries.
