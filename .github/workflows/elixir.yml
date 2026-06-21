@@ -25,6 +25,7 @@ jobs:
             ${{ runner.os }}-mix-
       - run: mix deps.get
       - run: mix compile --warnings-as-errors
+      - run: mix ports.gen_etf --check
       - run: mix deps.unlock --check-unused
       - run: mix hex.audit
       # -run: mix doctor
