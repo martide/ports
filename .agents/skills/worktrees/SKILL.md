@@ -14,7 +14,7 @@ The fix is a **slug** — one short identifier per worktree that names its branc
 Two stacks, different collision surfaces:
 
 - **Phoenix/Ash** (`mix.exs`): all worktrees share one Postgres server and the `:4000` port. Isolate both via a gitignored `config/dev.secret.exs`.
-- **Astro** (`package.json` + `astro`): no database, and the caches (`node_modules`, `.astro`, `.wrangler`, `dist`) are per-checkout and gitignored — already isolated. Only the dev-server port is shared, and Astro auto-increments past a busy one. So the Astro track is mostly "seed the build to skip a cold `npm install`."
+- **Astro** (`package.json` + `astro`): caches (`node_modules`, `.astro`, `.wrangler`, `dist`) are per-checkout and gitignored — already isolated. Only the dev-server port is shared, and Astro auto-increments past a busy one. Most standalone sites (blog, training, glossary, …) have **no database**, so the track is mostly "seed the build." But a D1-backed Astro app (the monorepo publics — `jobs/public`, `maritimebell/frontend` — which bind `d1_databases` in `wrangler.jsonc`) reads a local `.wrangler` D1 that starts **empty**; it must be migrated + backfilled or pages error / show no data (A1).
 
 A **monorepo** holds both in one checkout (e.g. `maritimebell`: `backend/` Phoenix + `frontend/` Astro). One worktree spans both — run each track against its own dir. Step 1 detects this.
 
@@ -194,7 +194,7 @@ Drop the databases **before** removing the worktree — once `dev.secret.exs` is
 
 # Astro track
 
-Astro sites have no database and their build caches are per-checkout and gitignored, so a worktree is already isolated once it has its own `node_modules`. Run npm from `$ASTRO_DIR` (the repo root, or `frontend/` in the maritimebell monorepo).
+Astro build caches are per-checkout and gitignored, so a worktree is isolated once it has its own `node_modules` — and, for a D1-backed app, a migrated local D1. Run npm from `$ASTRO_DIR` (the repo root, or `frontend/` in the maritimebell monorepo).
 
 ## A1 — Seed node_modules, then verify baseline
 
@@ -210,11 +210,22 @@ npm install          # reconciles the clone against package-lock.json — fast w
                      # (use `npm install`, NOT `npm ci` — ci wipes node_modules and defeats the clone)
 ```
 
+**If the app binds Cloudflare D1** (its `.wrangler` D1 is per-worktree and starts empty — pages that query `env.DB` will hit missing-table errors or show no data otherwise):
+
+```bash
+if grep -qs d1_databases wrangler*.jsonc; then
+  npm run d1:migrate:local      # jobs/public; else: wrangler d1 migrations apply <db> --local
+  # then backfill the read-model from Phoenix — see the app's README
+  # (jobs/public/README.md: run Martidejobs.D1.BackfillJob from the portal to populate local D1)
+fi
+```
+
 Verify the baseline before implementing:
 
 ```bash
 npm run check        # astro check — types + template diagnostics, fast
 # npm test           # full gate (build + check + typecheck; training also runs Playwright) — slower
+# npm run dev        # for a D1-backed app, only serves real data AFTER the migrate + backfill above
 ```
 
 Report the baseline (slug, path, check result) before implementing. Don't build on a red baseline.
@@ -227,7 +238,7 @@ Report the baseline (slug, path, check result) before implementing. Don't build 
 
 ## A3 — Teardown
 
-No database to drop and no config seam to unwind — the caches are per-worktree and vanish with it:
+No shared database to drop and no config seam to unwind — the caches (and any local `.wrangler` D1) are per-worktree and vanish with it:
 
 ```bash
 # from the MAIN checkout
@@ -243,4 +254,4 @@ git branch -d <slug>                       # if fully merged
 |---|---|---|
 | Dev-server port | `4321` | Astro auto-increments past a busy port; pin with `-- --port <n>` on plain-`astro dev` repos |
 | `node_modules`, `.astro`, `.wrangler`, `dist` | per-checkout | gitignored → already isolated; clone from main (A1) only to speed setup |
-| Database | — | none — these sites read no DB (`blog` uses static `ASSETS`/`IMAGES` Cloudflare bindings; `training` none). No cross-worktree collision. |
+| Database | — | Standalone sites read no DB (blog/training/glossary/software/manning). **D1-backed apps** (`jobs/public`, `maritimebell/frontend` — bind `d1_databases`) use a per-worktree local `.wrangler` D1: not shared, so no cross-worktree collision, but it starts **empty** — migrate + backfill it (A1). |

@@ -127,12 +127,6 @@
       "skillPath": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
       "computedHash": "a643931cf82fa02b2bb61e97eed8dd6096ab5384bcd4c1f9ea09ce3ee45eb084"
     },
-    "systematic-debugging": {
-      "source": "obra/superpowers",
-      "sourceType": "github",
-      "skillPath": "skills/systematic-debugging/SKILL.md",
-      "computedHash": "792a368e074981d7e3138edb439e138489b2ac247cd1e5739fab52af680fb17b"
-    },
     "tdd": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -179,7 +173,7 @@
       "source": "git@github.com:martide/skills.git",
       "sourceType": "git",
       "skillPath": "skills/worktrees/SKILL.md",
-      "computedHash": "7d30f828ba98fb9a426e67ba6aa33c32e602472d986eeadca4d159e2338f2fcf"
+      "computedHash": "406ae29f57c0b241db82839b618775fca3c7419037fba023e7913e0e05ec34e5"
     },
     "writing-great-skills": {
       "source": "mattpocock/skills",
