@@ -25,6 +25,12 @@
       "skillPath": "skills/chrome-devtools-cli/SKILL.md",
       "computedHash": "17cb3fc4a4c2dce77f5dadd8c7f906f286ea0903e051535814daa7fd7e3161c4"
     },
+    "code-review": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/code-review/SKILL.md",
+      "computedHash": "4a17d9d3e0fc87ae48544d371a820fac5a4a78f4c05e7e6b3229094fbf8a7e26"
+    },
     "codebase-design": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -91,6 +97,12 @@
       "skillPath": "skills/productivity/handoff/SKILL.md",
       "computedHash": "5d0f81e38abe6b984e1feaa731927de5291d040982106ac513cf54ec240e00ec"
     },
+    "implement": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/implement/SKILL.md",
+      "computedHash": "5eedab2e36a68278662484e8e243624fe0bb74040299aa6c8a525feb65b0365c"
+    },
     "improve-codebase-architecture": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -120,6 +132,12 @@
       "sourceType": "github",
       "skillPath": "skills/receiving-code-review/SKILL.md",
       "computedHash": "3f56080356c62e4f74a183d7371686babc661e41a952dc67a97c2c76fe8a9329"
+    },
+    "research": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/research/SKILL.md",
+      "computedHash": "87d17f5103899fbe179b552a85485d50f2316ca5b3128f5716af7d88817533e1"
     },
     "setup-matt-pocock-skills": {
       "source": "mattpocock/skills",
