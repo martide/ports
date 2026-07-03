@@ -115,6 +115,12 @@
       "skillPath": "skills/memory-leak-debugging/SKILL.md",
       "computedHash": "5476f2dbfab1650c724f16774ad695bf39db7a41f2494501d70bb08a717a5ea6"
     },
+    "playwright-cli": {
+      "source": "microsoft/playwright-cli",
+      "sourceType": "github",
+      "skillPath": "skills/playwright-cli/SKILL.md",
+      "computedHash": "bf3fd079a642ccd949d6eb4e702c9aa6d3bba62768b08bc772eb0a5f743dd959"
+    },
     "prototype": {
       "source": "mattpocock/skills",
       "sourceType": "github",
