@@ -23,6 +23,14 @@ defmodule Ports.Loader do
     "2023-2 UNLOCODE CodeListPart3.csv"
   ]
 
+  def load_ports do
+    # Safer than :erlang.binary_to_term — rejects function/reference terms on top of :safe.
+    [:code.priv_dir(:ports), "data", "ports.etf"]
+    |> Path.join()
+    |> File.read!()
+    |> Plug.Crypto.non_executable_binary_to_term([:safe])
+  end
+
   def load_code_list do
     @code_list_sources
     |> csv_decode()
